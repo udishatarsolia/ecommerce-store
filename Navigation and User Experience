@@ -1,0 +1,40 @@
+// src/App.js
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ProductList from './components/ProductList';
+import SearchBar from './components/SearchBar';
+import ProductViewToggle from './components/ProductViewToggle';
+import CartProvider from './context/CartContext';
+import Cart from './components/Cart';
+import Checkout from './components/Checkout';
+import Payment from './components/Payment';
+
+const App = () => {
+  const [view, setView] = useState('grid');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  return (
+    <CartProvider>
+      <Router>
+        <div className="app">
+          <SearchBar onSearch={handleSearch} />
+          <ProductViewToggle view={view} setView={setView} />
+          <Cart />
+          <Switch>
+            <Route path="/" exact>
+              <ProductList view={view} searchQuery={searchQuery} />
+            </Route>
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/payment" component={Payment} />
+          </Switch>
+        </div>
+      </Router>
+    </CartProvider>
+  );
+};
+
+export default App;

@@ -1,0 +1,25 @@
+// src/components/Checkout.js
+import React, { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
+
+const Checkout = () => {
+  const { cart } = useContext(CartContext);
+
+  const handleCheckout = () => {
+    // Implement checkout logic here
+  };
+
+  return (
+    <div className="checkout">
+      <h1>Checkout</h1>
+      <ul>
+        {cart.map((item, index) => (
+          <li key={index}>{item.name} - ${item.price}</li>
+        ))}
+      </ul>
+      <button onClick={handleCheckout}>Proceed to Payment</button>
+    </div>
+  );
+};
+
+export default Checkout;
